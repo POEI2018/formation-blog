@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Article } from './article';
 
 @Component({
@@ -12,7 +12,7 @@ export class AppComponent {
 
   constructor(){
     this.articles = new Array() ;
-    this.title='Bienvenu sur mon blog realisé avec angular 6.0.3';
+    this.title='Bienvenu sur mon blog realisé avec angular 6.0.3 !';
   }
 
   handleCreate(article:Article){
