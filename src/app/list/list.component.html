@@ -1,4 +1,12 @@
-<div *ngFor="let article of articles;"> 
-<h4>{{article.title}}</h4>
-  <p>{{article.content}}</p>
+<div>
+  <div class="card" *ngFor="let article of articles">
+    <div class="card-body">
+      <h4 class="card-title">
+        {{ article.title }}
+        <img src="/assets/delete.svg" (click)="delete(article)" />
+        <img src="/assets/edit.svg" (click)="edit(article)" />
+      </h4>
+      <p class="card-text">{{ article.content }}</p>
+    </div>
+  </div>
 </div>
