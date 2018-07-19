@@ -64,9 +64,17 @@ export class ArticleService {
    return null ;
   }
 
-  delete(id: number):Observable<boolean>{
 
-    return null ; 
+    delete(id: number): Observable<void> {
+      		let result = new Subject<void>();
+      		this.httpClient.delete(this.apiUrl + `/${id}`).subscribe(
+      			() => {
+      			this.republish(id, null);
+      				result.complete();
+      			},
+      			(response: HttpErrorResponse) => result.error(response.message)
+      		);
+      		return result;
   }
 
   private republish(id:number, article:Article){

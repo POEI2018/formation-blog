@@ -35,7 +35,11 @@ export class AppComponent implements OnInit {
   }
 
   handleDelete(id: number) {
-    this.updateList(id);
+    this.articleService.delete(id)
+			.subscribe({
+				complete: () => console.log(`Article d'id ${id} supprimé avec succès`),
+				error: (message) => console.log(`Impossible de supprimer l'article : ${message}`)
+		});
   }
 
   handleUpdate(article: Article) {
