@@ -1,25 +1,30 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Article } from './article';
+import { ArticleService } from './article.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title: string;
   articles: Array<Article>;
   showList: boolean;
   editArticle: Article;
 
-  constructor() {
+  constructor(private articleService:ArticleService) {
     this.showList = true;
     this.articles = new Array();
     this.title = 'Bienvenu sur mon blog realisé avec angular 6.0.3 !';
   }
 
+ ngOnInit(){
+  this.articleService.list().subscribe((list) => this.articles = list);
+ }
+
   handleCreate(article: Article) {
-    this.articles.push(article);
+    this.articleService.create(article);
     this.showList = true;
 
   }
