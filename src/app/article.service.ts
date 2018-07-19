@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Article } from './article';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment as ENV } from '../environments/environment';
 
 
@@ -39,9 +39,19 @@ export class ArticleService {
   // Renvoyer un observable sur un seul article crée 
   create(article: Article):Observable<Article>{
     let result = new Subject<Article>() ;
-    // Si HTTP POST success --> result.next(new Article) && result.complete 
-    // sinon si erreur --> result.error(errorMessage)
-    return null ;    
+    this.httpClient.post<Article>(this.apiUrl, article)
+      .subscribe((newArticle) => {
+        // Si HTTP POST success --> result.next(new Article) && result.complete 
+        this.republish(null, newArticle) ;
+        result.next(newArticle);
+        result.complete() ;
+      }, (response:HttpErrorResponse) => {
+       // sinon si erreur --> result.error(errorMessage)
+       result.error(response.message) ;
+      });
+    
+    
+    return result ;    
   }
 
   read(id: number):Observable<Article>{
@@ -57,6 +67,29 @@ export class ArticleService {
   delete(id: number):Observable<boolean>{
 
     return null ; 
+  }
+
+  private republish(id:number, article:Article){
+    let currentArticles = this.subject.value.slice() ; 
+    if (id === null){
+      // Creation
+      currentArticles.push(article);
+    } else {
+      // Recuperation de l'indice de l'article a mettre a jour ou supprimer
+      let index = currentArticles.findIndex((a) => a.id === id);
+      if (index >= 0 && article) {
+        //MAJ
+        currentArticles.splice(index, 1, article);
+
+      } else if (index >= 0) {
+        // Suppression
+        currentArticles.splice(index, 1);
+      } else {
+        console.log(`Impossible de traiter une operation sur un article inexistant (id=${id})`)
+      }
+    }
+    // Recuperer la nouvelle liste a jour 
+    this.subject.next(currentArticles) ;
   }
 
 

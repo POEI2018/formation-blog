@@ -8,7 +8,6 @@ import { NgForm } from '@angular/forms';
 	styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-	idCount: number = 0;
 	@Input() article: Article;
 	@Output() onCreate: EventEmitter<Article>;
 	@Output() onUpdate: EventEmitter<Article>;
@@ -16,7 +15,6 @@ export class EditComponent implements OnInit {
 
 	constructor() {
 		this.model = new Article();
-		this.model.id = ++this.idCount;
 		this.onCreate = new EventEmitter();
 		this.onUpdate = new EventEmitter();
 	}

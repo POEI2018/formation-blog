@@ -24,7 +24,12 @@ export class AppComponent implements OnInit {
  }
 
   handleCreate(article: Article) {
-    this.articleService.create(article);
+    this.articleService.create(article)
+			.subscribe({
+				next: (newArticle) => console.log(`Article ${newArticle} créé !`),
+				error: (errorMessage) => console.log(`Impossible de créer l'article ${article} : ${errorMessage}`),
+				complete: () => console.log('Création du nouvel article terminée avec succès !')
+			});
     this.showList = true;
 
   }
