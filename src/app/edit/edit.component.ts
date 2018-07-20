@@ -3,7 +3,7 @@ import { Article } from '../article';
 import { NgForm } from '@angular/forms';
 
 @Component({
-	selector: 'app-edit',
+	selector: 'blog-edit',
 	templateUrl: './edit.component.html',
 	styleUrls: ['./edit.component.css']
 })
@@ -28,7 +28,7 @@ export class EditComponent implements OnInit {
 	submit(form: NgForm) {
 		let data: Article = JSON.parse(JSON.stringify(this.model));
 		if (this.article) {
-			this.onUpdate.emit(data);
+			this.onUpdate.emit(data)
 		} else {
 			this.onCreate.emit(data);
 		}

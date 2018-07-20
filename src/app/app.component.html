@@ -9,28 +9,21 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Liste
+          <a class="nav-link" href="" [routerLink]="['articles']">Liste des articles
             <span class="sr-only">(current)</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Form</a>
+          <a class="nav-link" href="" [routerLink]="['edit']">Creer un article</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">Contact</a>
+          <a class="nav-link disabled" href="">Contact</a>
         </li>
       </ul>
     </div>
   </nav>
 </div>
-<div class="titre">{{title}}</div>
-
 <div class="container">
-  <h4>
-    <a href="" (click)="showList = !showList">Créer un nouvel article</a>
-  </h4>
-  <app-list [articles]="articles" *ngIf="showList; else showFormTpl" (onDelete)="handleDelete($event)" (onEdit)="showEdit($event)"></app-list>
-</div>
-<ng-template #showFormTpl>
-  <app-edit [article]="editArticle" (onCreate)="handleCreate($event)" (onUpdate)="handleUpdate($event)"></app-edit>
-</ng-template>
+  <h1 style="text-decoration: underline overline; text-align: center">{{title}}</h1>
+  <router-outlet></router-outlet>
+</div> 

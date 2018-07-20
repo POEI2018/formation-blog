@@ -9,19 +9,18 @@ import { ArticleService } from './article.service';
 })
 export class AppComponent implements OnInit {
 	title: string;
-	articles: Array<Article>;
+	
 	showList: boolean;
 	editArticle: Article;
 
 	constructor(private articleService: ArticleService) {
 		this.showList = true;
 		this.title = 'Bienvenue sur mon blog réalisé avec Angular 6.0.3 !';
-		this.articles = new Array();
+		
 	}
 
 	ngOnInit() {
-		this.articleService.list()
-			.subscribe((list) => this.articles = list);
+		
 	}
 
 	handleCreate(article: Article) {
